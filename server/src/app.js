@@ -5,6 +5,7 @@ const cookieSession = require("cookie-session");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 const authRoutes = require("./routes/authRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
 const app = express();
 
 const limiter = rateLimit({
@@ -29,5 +30,6 @@ app.use(
 );
 app.use(limiter);
 app.use("/api/auth", authRoutes);
+app.use("api/auth", bookingRoutes);
 
 module.exports = app;
