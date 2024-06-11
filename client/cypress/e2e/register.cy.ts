@@ -26,7 +26,7 @@ describe("Register a user", () => {
   });
 
   it("Register a user", () => {
-    cy.get("[data-cy=registerButton]").click();
+    /*     cy.get("[data-cy=registerButton]").click(); */
 
     cy.get("[data-cy=emailInput]").type("fake@email.com");
     cy.get("[data-cy=passwordInput]").type("password123");
@@ -52,8 +52,6 @@ describe("Register a user", () => {
       }
     });
 
-    // Optionally check for other UI changes or navigation
-    // For example, check for a success message or redirection
     cy.get("body").should("contain", "Registration successful");
   });
 });

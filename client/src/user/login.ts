@@ -1,7 +1,19 @@
 const axios = require("axios");
+const loginButton = document.getElementById("loginButton");
+const registerButton = document.getElementById("registerButton");
+
+let loginForm: HTMLFormElement | null;
+
+loginButton?.addEventListener("click", () => {
+  setupLoginForm();
+});
+
+registerButton?.addEventListener("click", () => {
+  closeLoginForm();
+});
 
 export function setupLoginForm() {
-  const form = document.createElement("form");
+  loginForm = document.createElement("form");
 
   const emailInput = document.createElement("input");
   emailInput.type = "email";
@@ -20,26 +32,51 @@ export function setupLoginForm() {
   submitButton.innerText = "Login";
   submitButton.setAttribute("data-cy", "loginBtn");
 
-  form.appendChild(emailInput);
-  form.appendChild(passwordInput);
-  form.appendChild(submitButton);
+  loginForm.appendChild(emailInput);
+  loginForm.appendChild(passwordInput);
+  loginForm.appendChild(submitButton);
 
-  document.body.appendChild(form);
+  document.body.appendChild(loginForm);
 
-  form.addEventListener("submit", async (e) => {
+  loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const email = emailInput.value;
     const password = passwordInput.value;
 
     try {
-      const response = await axios.post(`${process.env.API_URL}/auth/login`, {
-        email,
-        password,
+      const response = await axios.post(
+        `${process.env.API_URL}/auth/login`,
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      const successMessage = document.createElement("p");
+      successMessage.innerText = "Login successful";
+      document.body.appendChild(successMessage);
+
+      setTimeout(() => {
+        successMessage.remove();
+      }, 2000);
+      closeLoginForm();
+      const user = await axios.get(`${process.env.API_URL}/auth/user`, {
+        withCredentials: true,
       });
+      console.log("auth user", user.data);
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
   });
+}
+
+function closeLoginForm() {
+  if (loginForm) {
+    loginForm.remove();
+    loginForm = null;
+  }
 }

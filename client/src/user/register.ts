@@ -4,11 +4,24 @@ const {
   loadRecaptcha,
   mockRecaptcha,
 } = require("../utils/recaptcha.ts");
+const { setupLoginForm } = require("../user/login.ts");
+const loginButton = document.getElementById("loginButton");
+const registerButton = document.getElementById("registerButton");
+
+let registerForm: HTMLFormElement | null;
+
+registerButton?.addEventListener("click", () => {
+  setupRegisterForm();
+});
+
+loginButton?.addEventListener("click", () => {
+  closeRegisterForm();
+});
 
 export function setupRegisterForm() {
   const recaptchaSiteKey = process.env.RECAPTCHA_SITE_KEY;
 
-  const form = document.createElement("form");
+  registerForm = document.createElement("form");
 
   const emailInput = document.createElement("input");
   emailInput.type = "email";
@@ -32,12 +45,12 @@ export function setupRegisterForm() {
   submitButton.innerText = "Register";
   submitButton.setAttribute("data-cy", "registerBtn");
 
-  form.appendChild(emailInput);
-  form.appendChild(passwordInput);
-  form.appendChild(recaptchaDiv);
-  form.appendChild(submitButton);
+  registerForm.appendChild(emailInput);
+  registerForm.appendChild(passwordInput);
+  registerForm.appendChild(recaptchaDiv);
+  registerForm.appendChild(submitButton);
 
-  document.body.appendChild(form);
+  document.body.appendChild(registerForm);
 
   if (isProduction) {
     window.addEventListener("load", loadRecaptcha);
@@ -45,7 +58,7 @@ export function setupRegisterForm() {
     mockRecaptcha();
   }
 
-  form.addEventListener("submit", async (e) => {
+  registerForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const email = emailInput.value;
@@ -68,6 +81,17 @@ export function setupRegisterForm() {
           recaptchaToken,
         }
       );
+
+      const successMessage = document.createElement("p");
+      successMessage.innerText = "Registration successful";
+      document.body.appendChild(successMessage);
+
+      setTimeout(() => {
+        successMessage.remove();
+      }, 2000);
+      closeRegisterForm();
+      setupLoginForm();
+
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -77,4 +101,11 @@ export function setupRegisterForm() {
       window.grecaptcha.reset();
     }
   });
+}
+
+function closeRegisterForm() {
+  if (registerForm) {
+    registerForm.remove();
+    registerForm = null;
+  }
 }
