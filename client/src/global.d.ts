@@ -12,4 +12,5 @@ declare interface Window {
     getResponse: () => string;
     reset: () => void;
   };
+  router: (path: string) => void;
 }

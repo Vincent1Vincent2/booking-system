@@ -10,6 +10,6 @@
     "outDir": "./dist",
     "types": ["cypress", "node"]
   },
-  "include": ["src", "**/*.ts", "src**"],
+  "include": ["src", "**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }
