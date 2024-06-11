@@ -7,8 +7,9 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "types": ["cypress", "node"]
   },
-  "include": ["src"],
+  "include": ["src", "**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }
