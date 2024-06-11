@@ -1,24 +1,18 @@
+import { setupLoginForm } from "./login";
+
 const axios = require("axios");
 const {
   isProduction,
   loadRecaptcha,
   mockRecaptcha,
-} = require("../utils/recaptcha.ts");
-const { setupLoginForm } = require("../user/login.ts");
-const loginButton = document.getElementById("loginButton");
-const registerButton = document.getElementById("registerButton");
-
+} = require("../utils/recaptcha");
 let registerForm: HTMLFormElement | null;
 
-registerButton?.addEventListener("click", () => {
-  setupRegisterForm();
-});
-
-loginButton?.addEventListener("click", () => {
-  closeRegisterForm();
-});
-
 export function setupRegisterForm() {
+  if (registerForm) {
+    return;
+  }
+
   const recaptchaSiteKey = process.env.RECAPTCHA_SITE_KEY;
 
   registerForm = document.createElement("form");
@@ -50,7 +44,7 @@ export function setupRegisterForm() {
   registerForm.appendChild(recaptchaDiv);
   registerForm.appendChild(submitButton);
 
-  document.body.appendChild(registerForm);
+  document.getElementById("app")?.appendChild(registerForm);
 
   if (isProduction) {
     window.addEventListener("load", loadRecaptcha);
@@ -103,7 +97,7 @@ export function setupRegisterForm() {
   });
 }
 
-function closeRegisterForm() {
+export function closeRegisterForm() {
   if (registerForm) {
     registerForm.remove();
     registerForm = null;

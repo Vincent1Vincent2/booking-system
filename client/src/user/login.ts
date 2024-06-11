@@ -1,18 +1,11 @@
 const axios = require("axios");
-const loginButton = document.getElementById("loginButton");
-const registerButton = document.getElementById("registerButton");
-
 let loginForm: HTMLFormElement | null;
 
-loginButton?.addEventListener("click", () => {
-  setupLoginForm();
-});
-
-registerButton?.addEventListener("click", () => {
-  closeLoginForm();
-});
-
 export function setupLoginForm() {
+  if (loginForm) {
+    return;
+  }
+
   loginForm = document.createElement("form");
 
   const emailInput = document.createElement("input");
@@ -36,7 +29,7 @@ export function setupLoginForm() {
   loginForm.appendChild(passwordInput);
   loginForm.appendChild(submitButton);
 
-  document.body.appendChild(loginForm);
+  document.getElementById("app")?.appendChild(loginForm);
 
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -57,12 +50,13 @@ export function setupLoginForm() {
       );
       const successMessage = document.createElement("p");
       successMessage.innerText = "Login successful";
-      document.body.appendChild(successMessage);
+      document.getElementById("app")?.appendChild(successMessage);
 
       setTimeout(() => {
         successMessage.remove();
       }, 2000);
       closeLoginForm();
+      // Reload the user information or handle post-login state here
       const user = await axios.get(`${process.env.API_URL}/auth/user`, {
         withCredentials: true,
       });
@@ -74,7 +68,7 @@ export function setupLoginForm() {
   });
 }
 
-function closeLoginForm() {
+export function closeLoginForm() {
   if (loginForm) {
     loginForm.remove();
     loginForm = null;
