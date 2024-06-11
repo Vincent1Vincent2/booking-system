@@ -24,10 +24,24 @@ model User {
   createdAt DateTime  @default(now())
 }
 
+
 model Booking {
   id        Int      @id @default(autoincrement())
   date      DateTime
   userId    Int
+  roomId    Int
   user      User     @relation(fields: [userId], references: [id])
+  room      Room     @relation(fields: [roomId], references: [id])
   archived  Boolean  @default(false)
+}
+model Room {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  description String?
+  capacity    Int?
+  status      String    @default("available")
+  type        String?
+  bookings    Booking[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }

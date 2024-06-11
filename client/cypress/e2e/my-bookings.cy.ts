@@ -8,6 +8,6 @@ describe("Check Bookings", () => {
   });
 
   it("Check My Bookings", () => {
-    cy.get("[data-cy=bookingsContainer]").children().should("have.length", 2);
+    cy.get("[data-cy=bookingsContainer]").children().should("have.length", 3);
   });
 });

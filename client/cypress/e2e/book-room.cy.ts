@@ -3,6 +3,8 @@ describe("Book Room", () => {
     cy.visit("http://localhost:9000/");
 
     cy.get("[data-cy=createBookingBtn]").click();
+
+    cy.get("[data-cy=rooms]").children().should("have.length.at.least", 3);
   });
 
   it("Book current date and the next two days", () => {
@@ -22,6 +24,7 @@ describe("Book Room", () => {
     const dates = [today, tomorrow, dayAfterTomorrow].map(formatDate);
 
     dates.forEach((date) => {
+      cy.get("[data-cy=rooms]").children().first().click();
       cy.get("[data-cy=dateSelector]").clear().type(date);
 
       cy.intercept("POST", `${Cypress.env("API_URL")}/auth/booking`).as(

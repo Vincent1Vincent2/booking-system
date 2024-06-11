@@ -26,7 +26,7 @@ describe("Register a user", () => {
   });
 
   it("Register a user", () => {
-    /*     cy.get("[data-cy=registerButton]").click(); */
+    cy.get("[data-cy=registerButton]").click();
 
     cy.get("[data-cy=emailInput]").type("fake@email.com");
     cy.get("[data-cy=passwordInput]").type("password123");
