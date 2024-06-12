@@ -27,7 +27,15 @@ exports.createBooking = async (req, res) => {
 
   try {
     const booking = await prisma.booking.create({
-      data: { date: date, roomId: roomId, room: room },
+      data: {
+        date: date,
+        room: {
+          connect: { id: room.id },
+        },
+        user: {
+          connect: { id: user.id },
+        },
+      },
     });
 
     res.status(200).json(booking);

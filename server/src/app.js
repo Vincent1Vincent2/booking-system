@@ -6,6 +6,7 @@ const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 const authRoutes = require("./routes/authRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
+const roomRoutes = require("./routes/roomRoutes");
 const app = express();
 
 const limiter = rateLimit({
@@ -30,6 +31,7 @@ app.use(
 );
 app.use(limiter);
 app.use("/api/auth", authRoutes);
-app.use("api/auth", bookingRoutes);
+app.use("/api/auth", bookingRoutes);
+app.use("/api/auth", roomRoutes);
 
 module.exports = app;
