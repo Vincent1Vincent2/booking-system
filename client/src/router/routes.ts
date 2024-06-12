@@ -14,7 +14,6 @@ const appRoutes: Route[] = [
       closeLoginForm();
       closeRegisterForm();
       closeBookingForm();
-      setupLoginForm();
     },
   },
   {
