@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const cookieSession = require("cookie-session");
 const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
@@ -16,6 +17,7 @@ const allowedOrigins = [
 
 const corsOptions = {
   credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"],
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) {
@@ -28,6 +30,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(cookieParser());
 app.use(
   cookieSession({
     name: "token",
