@@ -13,8 +13,20 @@ exports.register = async (req, res) => {
   const { email, password, recaptchaToken } = req.body;
   const isHuman = await verifyRecaptcha(recaptchaToken);
 
+  if (!email) {
+    return res.status(422).json({ message: "Please provide a email" });
+  }
+  if (!password) {
+    return res.status(422).json({ message: "Please provide a password" });
+  }
   if (!isHuman) {
     return res.status(400).json({ message: "reCAPTCHA failed" });
+  }
+
+  const user = await prisma.user.findUnique({ where: { email: email } });
+
+  if (user) {
+    return res.status(409).json({ message: "User is already registered" });
   }
 
   const hashedPassword = bcrypt.hashSync(password, 8);
@@ -30,11 +42,16 @@ exports.register = async (req, res) => {
   const noPassword = [userWithoutPassword];
 
   const token = generateToken(newUser);
-  res.status(200).json({ token, user: noPassword });
+  return res.status(200).json({ token, user: noPassword });
 };
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
+
+  if (!email || password) {
+    return res.status(422).json({ message: "Email or password is not valid" });
+  }
+
   const user = await prisma.user.findUnique({ where: { email } });
 
   if (!user || !bcrypt.compareSync(password, user.password)) {
