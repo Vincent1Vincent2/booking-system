@@ -1,6 +1,6 @@
 describe("Book Room", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:9000/");
+    cy.visit("https://booking-system-lovat.vercel.app/");
 
     cy.get("[data-cy=createBookingBtn]").click();
 
@@ -27,7 +27,7 @@ describe("Book Room", () => {
       cy.get("[data-cy=rooms]").children().first().click();
       cy.get("[data-cy=dateSelector]").clear().type(date);
 
-      cy.intercept("POST", `${Cypress.env("API_URL")}/auth/booking`).as(
+      cy.intercept("POST", `${Cypress.env("API_URL")}/bookings/booking`).as(
         "bookingRequest"
       );
 

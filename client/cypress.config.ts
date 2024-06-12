@@ -6,7 +6,7 @@ export default defineConfig({
       // implement node event listeners here
     },
     env: {
-      API_URL: "http://localhost:3000/api",
+      API_URL: "https://booking-system-52fbcxat6q-lz.a.run.app/api",
     },
   },
 });

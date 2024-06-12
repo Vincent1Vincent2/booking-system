@@ -1,6 +1,6 @@
 describe("Register a user", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:9000/", {
+    cy.visit("https://booking-system-lovat.vercel.app/", {
       onBeforeLoad(win) {
         // Mock the grecaptcha object for testing purposes
         win.grecaptcha = {

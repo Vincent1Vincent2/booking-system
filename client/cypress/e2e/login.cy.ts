@@ -1,6 +1,6 @@
 describe("Login a user", () => {
   it("Login a user", () => {
-    cy.visit("http://localhost:9000/");
+    cy.visit("https://booking-system-lovat.vercel.app/");
     cy.get("[data-cy=loginButton]").click();
 
     cy.get("[data-cy=emailInput]").type("fake@email.com");

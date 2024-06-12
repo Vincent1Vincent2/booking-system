@@ -1,6 +1,6 @@
 describe("Check Bookings", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:9000/");
+    cy.visit("https://booking-system-lovat.vercel.app/");
 
     //BADGE NUMBER CHECK SHOULD BE DONE
 
