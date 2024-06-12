@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const prisma = require("../../prisma/db");
 const { verifyRecaptcha } = require("../utils/recaptcha");
+const Cookies = require("js-cookie");
 
 const generateToken = (user) => {
   return jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
