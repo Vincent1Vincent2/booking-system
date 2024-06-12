@@ -20,9 +20,7 @@ app.use(
     name: "token",
     secret: process.env.SECRET || "401be75bbb0faf350d3d91a1d5e542a1",
     maxAge: 24 * 60 * 60 * 10000,
-    httpOnly: true,
-    sameSite: "none",
-    secure: true,
+    httpOnly: false,
   })
 );
 app.use(cors());

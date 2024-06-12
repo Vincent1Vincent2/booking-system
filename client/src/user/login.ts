@@ -39,16 +39,10 @@ export function setupLoginForm() {
     const password = passwordInput.value;
 
     try {
-      const response = await axios.post(
-        `${process.env.API_URL}/auth/login`,
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.post(`${process.env.API_URL}/auth/login`, {
+        email,
+        password,
+      });
       const successMessage = document.createElement("p");
       successMessage.innerText = "Login successful";
       document.getElementById("app")?.appendChild(successMessage);
