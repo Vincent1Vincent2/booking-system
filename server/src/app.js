@@ -28,6 +28,7 @@ app.use(
     origin: [
       "http://localhost:9000",
       "https://booking-system-lovat.vercel.app",
+      "https://booking-system-lovat.vercel.app/login",
     ],
     credentials: true,
   })
