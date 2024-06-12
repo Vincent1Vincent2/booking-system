@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
+    "dev": "dist/index.html",
     "test": "cypress run"
   },
   "keywords": [],
