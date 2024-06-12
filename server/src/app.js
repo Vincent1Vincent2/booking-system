@@ -27,7 +27,8 @@ app.use(
 );
 app.use(
   cors({
-    origin: "http://localhost:9000",
+    origin:
+      "http://localhost:9000" && "https://booking-system-lovat.vercel.app",
     credentials: true,
   })
 );
