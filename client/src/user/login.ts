@@ -39,10 +39,16 @@ export function setupLoginForm() {
     const password = passwordInput.value;
 
     try {
-      const response = await axios.post(`${process.env.API_URL}/auth/login`, {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${process.env.API_URL}/auth/login`,
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       const successMessage = document.createElement("p");
       successMessage.innerText = "Login successful";
       document.getElementById("app")?.appendChild(successMessage);
@@ -51,7 +57,9 @@ export function setupLoginForm() {
         successMessage.remove();
       }, 2000);
       closeLoginForm();
-      /* const user = await axios.get(`${process.env.API_URL}/auth/user`); */
+      const user = await axios.get(`${process.env.API_URL}/auth/user`, {
+        withCredentials: true,
+      });
       const event = new CustomEvent("login");
       document.dispatchEvent(event);
     } catch (error) {

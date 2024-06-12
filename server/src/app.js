@@ -16,7 +16,7 @@ const limiter = rateLimit({
 });
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:9000" }));
 app.use(limiter);
 app.use(
   cookieSession({
