@@ -23,14 +23,19 @@ app.use(
     name: "token",
     secret: process.env.SECRET || "401be75bbb0faf350d3d91a1d5e542a1",
     sameSite: "none",
-    httpOnly: false,
-    secure: true,
+    httpOnly: true,
+    secure: false,
     maxAge: 24 * 60 * 60 * 1000,
   })
 );
 
 app.use("/api/auth", authRoutes);
-app.use("/api/auth", bookingRoutes);
-app.use("/api/auth", roomRoutes);
+app.use("/api/bookings", bookingRoutes);
+app.use("/api/rooms", roomRoutes);
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
 
 module.exports = app;
