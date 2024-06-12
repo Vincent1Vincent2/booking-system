@@ -4,16 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --mode development",
-    "build": "webpack --mode production",
-    "dev": "dist/index.html",
-    "test": "cypress run"
-  },
+  "start": "webpack serve --mode development",
+  "build": "webpack --mode production",
+  "serve": "node server.js",
+  "vercel-build": "npm run build",
+  "dev": "webpack serve --mode development",
+  "test": "cypress run"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.7.2",
+    "express": "^4.19.2",
     "prisma": "^5.15.0"
   },
   "devDependencies": {
