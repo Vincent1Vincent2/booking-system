@@ -2,11 +2,12 @@ const axios = require("axios");
 let loginForm: HTMLFormElement | null;
 
 export function setupLoginForm() {
-  if (loginForm) {
+  if (document.getElementById("loginForm")) {
     return;
   }
 
   loginForm = document.createElement("form");
+  loginForm.id = "loginForm";
 
   const emailInput = document.createElement("input");
   emailInput.type = "email";
@@ -56,12 +57,11 @@ export function setupLoginForm() {
         successMessage.remove();
       }, 2000);
       closeLoginForm();
-      // Reload the user information or handle post-login state here
       const user = await axios.get(`${process.env.API_URL}/auth/user`, {
         withCredentials: true,
       });
-      console.log("auth user", user.data);
-      console.log(response.data);
+      const event = new CustomEvent("login");
+      document.dispatchEvent(event);
     } catch (error) {
       console.error(error);
     }

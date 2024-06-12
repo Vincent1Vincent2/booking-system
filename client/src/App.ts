@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   window.router(currentPath);
 
   document.addEventListener("login", async () => {
-    await updateHeader(); // Ensure header updates upon login
-    window.router("/"); // Redirect to home or another route after login if needed
+    await updateHeader();
+    window.router("/");
   });
   document.addEventListener("logout", async () => {
     await updateHeader();
