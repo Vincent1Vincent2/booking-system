@@ -21,18 +21,11 @@ app.use(
     secret: process.env.SECRET || "401be75bbb0faf350d3d91a1d5e542a1",
     maxAge: 24 * 60 * 60 * 10000,
     httpOnly: true,
+    sameSite: "none",
+    secure: true,
   })
 );
-app.use(
-  cors({
-    origin: [
-      "http://localhost:9000",
-      "https://booking-system-lovat.vercel.app",
-      "https://booking-system-lovat.vercel.app/login",
-    ],
-    credentials: true,
-  })
-);
+app.use(cors());
 
 app.use(limiter);
 app.use("/api/auth", authRoutes);
