@@ -22,7 +22,8 @@ app.use(
     maxAge: 24 * 60 * 60 * 10000,
     httpOnly: false,
     sameSite: "none",
-    secure: false,
+    secure: true,
+    path: "/login",
   })
 );
 app.use(
