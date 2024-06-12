@@ -17,17 +17,25 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./client
 
       - name: Build project
         run: npm run build
+        working-directory: ./client
 
       - name: Start application
         run: npm start &
+        working-directory: ./client
+        env:
+          API_URL: "http://localhost:3000/api"
+          RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
 
       - name: Wait for application to start
         run: sleep 5
 
       - name: Cypress run
-        uses: cypress-io/github-action@v6
+        run: npx cypress run
+        working-directory: ./client
         env:
           API_URL: "http://localhost:3000/api"
+          NODE_ENV: development
