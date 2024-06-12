@@ -1,19 +1,19 @@
+const { updateHeader } = require("./header/header.ts");
 const { router } = require("./router/router");
 
 window.router = router;
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const currentPath = window.location.pathname;
 
+  await updateHeader();
   window.router(currentPath);
 
-  document
-    .getElementById("homeButton")
-    ?.addEventListener("click", () => window.router("/"));
-  document
-    .getElementById("loginButton")
-    ?.addEventListener("click", () => window.router("/login"));
-  document
-    .getElementById("registerButton")
-    ?.addEventListener("click", () => window.router("/register"));
+  document.addEventListener("login", async () => {
+    await updateHeader(); // Ensure header updates upon login
+    window.router("/"); // Redirect to home or another route after login if needed
+  });
+  document.addEventListener("logout", async () => {
+    await updateHeader();
+  });
 });
