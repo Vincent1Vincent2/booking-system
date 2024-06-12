@@ -21,8 +21,6 @@ app.use(
     secret: process.env.SECRET || "401be75bbb0faf350d3d91a1d5e542a1",
     maxAge: 24 * 60 * 60 * 10000,
     httpOnly: false,
-    secure: true,
-    sameSite: "None",
   })
 );
 app.use(
