@@ -2,6 +2,8 @@ describe("Book Room", () => {
   beforeEach(() => {
     cy.visit("https://booking-system-lovat.vercel.app/");
 
+    cy.login("fake@email.com", "password123");
+
     cy.get("[data-cy=createBookingBtn]").click();
 
     cy.get("[data-cy=rooms]").children().should("have.length.at.least", 3);

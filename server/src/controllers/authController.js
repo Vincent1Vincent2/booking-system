@@ -48,7 +48,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
-  if (!email || password) {
+  if (!email || !password) {
     return res.status(422).json({ message: "Email or password is not valid" });
   }
 

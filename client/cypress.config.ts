@@ -6,6 +6,7 @@ export default defineConfig({
       // implement node event listeners here
     },
     env: {
+      BASE_URL: "https://booking-system-lovat.vercel.app",
       API_URL: "https://booking-system-52fbcxat6q-lz.a.run.app/api",
     },
   },
