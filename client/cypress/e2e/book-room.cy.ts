@@ -8,7 +8,7 @@ describe("Book Room", () => {
 
     cy.get("[data-cy=bookButton]").click();
 
-    cy.get("[data-cy=roomsSelector]")
+    cy.get("[data-cy=roomSelector]")
       .children()
       .should("have.length.at.least", 3);
   });
@@ -30,10 +30,11 @@ describe("Book Room", () => {
     const dates = [today, tomorrow, dayAfterTomorrow].map(formatDate);
 
     dates.forEach((date) => {
-      cy.get("[data-cy=roomSelector]").children().first().click();
+      cy.get("[data-cy=roomSelector]").select(0);
+
       cy.get("[data-cy=dateSelector]").clear().type(date);
 
-      cy.intercept("POST", `${Cypress.env("API_URL")}/bookings/booking`).as(
+      cy.intercept("POST", `${Cypress.env("API_URL")}/bookings/book`).as(
         "bookingRequest"
       );
 

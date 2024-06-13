@@ -6,8 +6,8 @@ const {
 const authenticateToken = require("../middleware/auth");
 const router = express.Router();
 
-router.post("/booking", authenticateToken, createBooking);
-router.get("/booking", authenticateToken, getBookings);
+router.post("/book", authenticateToken, createBooking);
+router.get("/bookings", authenticateToken, getBookings);
 router.get("/protected", authenticateToken, (req, res) => {
   res.json({ message: "This is protected data" });
 });

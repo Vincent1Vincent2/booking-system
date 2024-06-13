@@ -55,7 +55,7 @@ export async function setupBookingForm() {
 
       try {
         const response = await axios.post(
-          `${process.env.API_URL}/auth/booking`,
+          `${process.env.API_URL}/bookings/book`,
           {
             roomId,
             date: new Date(date).toISOString(),
