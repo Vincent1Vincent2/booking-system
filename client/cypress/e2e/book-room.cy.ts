@@ -13,7 +13,7 @@ describe("Book Room", () => {
       .should("have.length.at.least", 3);
   });
 
-  it("Book current date and the next two days", () => {
+  it("book current date and the next two days", () => {
     const formatDate = (date: Date): string => {
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, "0");

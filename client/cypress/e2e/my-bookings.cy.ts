@@ -1,4 +1,4 @@
-describe("Check Bookings", () => {
+describe("Check bookings", () => {
   beforeEach(() => {
     cy.visit("https://booking-system-lovat.vercel.app/");
 
@@ -7,7 +7,7 @@ describe("Check Bookings", () => {
     cy.get("[data-cy=myBookingsBtn]").click();
   });
 
-  it("Check My Bookings", () => {
+  it("check my bookings", () => {
     cy.get("[data-cy=bookingsContainer]").children().should("have.length", 3);
   });
 });
