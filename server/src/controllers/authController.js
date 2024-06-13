@@ -41,7 +41,6 @@ exports.register = async (req, res) => {
 
   const noPassword = [userWithoutPassword];
 
-  const token = generateToken(newUser);
   return res.status(200).json({ token, user: noPassword });
 };
 
@@ -64,16 +63,12 @@ exports.login = async (req, res) => {
 
   const token = generateToken(user);
 
-  req.session.token = token;
-
   res.cookie("access_token", token, {
     maxAge: 90 * 24 * 60 * 60 * 1000,
     httpOnly: true,
     sameSite: "none",
     secure: true,
   });
-
-  console.log("Token set in session:", req.session.token);
 
   return res.status(200).json({ user: noPassword });
 };
