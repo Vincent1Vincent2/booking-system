@@ -1,7 +1,7 @@
 const axios = require("axios");
 export async function getRooms() {
   try {
-    const response = await axios.get(`${process.env.API_URL}/auth/room`, {
+    const response = await axios.get(`${process.env.API_URL}/rooms/room`, {
       withCredentials: true,
     });
     console.log(response.data);

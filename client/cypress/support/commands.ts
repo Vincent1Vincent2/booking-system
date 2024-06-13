@@ -37,40 +37,62 @@
 // }
 
 Cypress.Commands.add("login", (username: string, password: string) => {
-  cy.session(
-    username,
-    () => {
-      cy.visit(Cypress.env("BASE_URL") + "/login");
-      cy.get("[data-cy=emailInput]").type(username);
-      cy.get("[data-cy=passwordInput]").type(password);
+  cy.session({ username, password }, () => {
+    cy.visit("/login");
+    cy.get("[data-cy=emailInput]").type(username);
+    cy.get("[data-cy=passwordInput]").type(password);
 
-      cy.get("[data-cy=emailInput]").should("have.value", "fake@email.com");
-      cy.get("[data-cy=passwordInput]").should("have.value", "password123");
+    cy.get("[data-cy=emailInput]").should("have.value", username);
+    cy.get("[data-cy=passwordInput]").should("have.value", password);
 
-      cy.intercept("POST", `${Cypress.env("API_URL")}/auth/login`).as(
-        "loginRequest"
-      );
-      cy.get("[data-cy=loginBtn]").click();
+    cy.intercept("POST", `${Cypress.env("API_URL")}/auth/login`).as(
+      "loginRequest"
+    );
+    cy.get("[data-cy=loginBtn]").click();
 
-      cy.wait("@loginRequest").then((interception) => {
-        if (interception.response) {
-          assert.equal(
-            interception.response.statusCode,
-            200,
-            "API call was successful"
-          );
-        } else {
-          throw new Error(
-            "API request failed or was not intercepted correctly"
-          );
-        }
-      });
-    },
+    cy.wait("@loginRequest").then((interception) => {
+      if (interception.response) {
+        assert.equal(
+          interception.response.statusCode,
+          200,
+          "API call was successful"
+        );
+      } else {
+        throw new Error("API request failed or was not intercepted correctly");
+      }
+    });
 
-    {
-      validate: () => {
-        cy.getCookie("access_token").should("exist");
-      },
-    }
-  );
+    // - Make a authentication request since cookies cant be accessed from client side
+    cy.request(`${Cypress.env("API_URL")}/auth/user`).then((authResponse) => {
+      expect(authResponse.status).to.eq(200);
+    });
+  });
+});
+
+Cypress.Commands.add("register", (username: string, password: string) => {
+  cy.session({ username, password }, () => {
+    cy.visit("/register");
+    cy.get("[data-cy=emailInput]").type(username);
+    cy.get("[data-cy=passwordInput]").type(password);
+
+    cy.get("[data-cy=emailInput]").should("have.value", username);
+    cy.get("[data-cy=passwordInput]").should("have.value", password);
+
+    cy.intercept("POST", `${Cypress.env("API_URL")}/auth/register`).as(
+      "registerRequest"
+    );
+    cy.get("[data-cy=registerBtn]").click();
+
+    cy.wait("@registerRequest").then((interception) => {
+      if (interception.response) {
+        assert.equal(
+          interception.response.statusCode,
+          200,
+          "API call was successful"
+        );
+      } else {
+        throw new Error("API request failed or was not intercepted correctly");
+      }
+    });
+  });
 });

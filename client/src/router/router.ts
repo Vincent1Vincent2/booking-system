@@ -1,6 +1,6 @@
 import { Route } from "./interface";
 
-const appRoutes = require("./routes");
+const appRoutes = require("./appRoutes");
 
 export const router = (path: string) => {
   window.history.pushState({}, "", path);
