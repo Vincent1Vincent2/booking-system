@@ -30,7 +30,7 @@ describe("Book Room", () => {
     const dates = [today, tomorrow, dayAfterTomorrow].map(formatDate);
 
     dates.forEach((date) => {
-      cy.get("[data-cy=roomSelector]").select(0);
+      cy.get("[data-cy=roomSelector]").select(1);
 
       cy.get("[data-cy=dateSelector]").clear().type(date);
 

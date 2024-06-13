@@ -71,7 +71,6 @@ export async function setupBookingForm() {
         setTimeout(() => {
           successMessage.remove();
         }, 2000);
-        closeBookingForm();
         console.log(response.data);
       } catch (error) {
         console.error(error);
