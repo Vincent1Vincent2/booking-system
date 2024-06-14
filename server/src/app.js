@@ -7,7 +7,7 @@ const authRoutes = require("./routes/authRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const roomRoutes = require("./routes/roomRoutes");
 
-require("./cronJobs");
+/* require("./cronJobs"); */
 
 const app = express();
 
