@@ -4,19 +4,23 @@ const cron = require("node-cron");
 const archivePastBookings = async () => {
   const now = new Date();
 
-  await prisma.booking.updateMany({
-    where: {
-      date: {
-        lt: now,
+  try {
+    await prisma.booking.updateMany({
+      where: {
+        date: {
+          lt: now,
+        },
+        archived: false,
       },
-      archived: false,
-    },
-    data: {
-      archived: true,
-    },
-  });
+      data: {
+        archived: true,
+      },
+    });
 
-  console.log("Past bookings archived successfully");
+    console.log("Past bookings archived successfully");
+  } catch (error) {
+    console.error("Error archiving past bookings:", error);
+  }
 };
 
 cron.schedule("0 0 * * *", () => {
