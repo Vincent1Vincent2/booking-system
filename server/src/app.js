@@ -7,6 +7,8 @@ const authRoutes = require("./routes/authRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const roomRoutes = require("./routes/roomRoutes");
 
+require("./cronJobs");
+
 const app = express();
 
 const allowedOrigins = [
