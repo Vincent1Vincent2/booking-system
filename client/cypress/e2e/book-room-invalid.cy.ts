@@ -42,7 +42,7 @@ describe("Book room on past dates", () => {
     const dates = [yesterday, dayBeforeYesterday].map(formatDate);
 
     dates.forEach((date) => {
-      cy.get("[data-cy=roomSelector]").select(1, { force: true });
+      cy.get("[data-cy=roomSelector]").select("Room 1");
 
       cy.get("[data-cy=dateSelector]").clear();
 
@@ -92,13 +92,6 @@ describe("Book already booked room", () => {
   });
 
   it("should not allow booking already booked dates", () => {
-    const formatDate = (date: Date): string => {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, "0");
-      const day = String(date.getDate()).padStart(2, "0");
-      return `${year}-${month}-${day}`;
-    };
-
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
@@ -108,7 +101,7 @@ describe("Book already booked room", () => {
     const dates = [today, tomorrow, dayAfterTomorrow].map(formatDate);
 
     dates.forEach((date) => {
-      cy.get("[data-cy=roomSelector]").select("Room 1", { force: true });
+      cy.get("[data-cy=roomSelector]").select("Room 1");
 
       cy.get("[data-cy=dateSelector]").clear();
 

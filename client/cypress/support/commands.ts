@@ -1,4 +1,7 @@
 /// <reference types="cypress" />
+
+import { formatDate } from "./utils";
+
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -100,13 +103,6 @@ Cypress.Commands.add("register", (username: string, password: string) => {
 Cypress.Commands.add("createBookings", () => {
   cy.visit("/book-room");
 
-  const formatDate = (date: Date): string => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
-
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
@@ -116,7 +112,7 @@ Cypress.Commands.add("createBookings", () => {
   const dates = [today, tomorrow, dayAfterTomorrow].map(formatDate);
 
   dates.forEach((date) => {
-    cy.get("[data-cy=roomSelector]").select("Room 1", { force: true });
+    cy.get("[data-cy=roomSelector]").select("Room 1");
 
     cy.get("[data-cy=dateSelector]").clear();
 
