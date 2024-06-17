@@ -2,6 +2,8 @@ const {
   renderLoggedInHeader,
   renderLoggedOutHeader,
 } = require("../components/header/header.ts");
+const { logout } = require("../utils/logout.ts");
+
 import { isAuthenticated } from "../user/auth";
 let header: HTMLHeadingElement | null;
 
@@ -29,4 +31,12 @@ export async function updateHeader() {
   document
     .getElementById("bookButton")
     ?.addEventListener("click", () => window.router("/book-room"));
+
+  document
+    .getElementById("bookingsButton")
+    ?.addEventListener("click", () => window.router("/my-bookings"));
+
+  document
+    .getElementById("logoutButton")
+    ?.addEventListener("click", async () => await logout());
 }
