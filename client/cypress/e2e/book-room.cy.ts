@@ -26,11 +26,14 @@ describe("Book room", () => {
     const dates = [today, tomorrow, dayAfterTomorrow].map(formatDate);
 
     dates.forEach((date) => {
-      cy.get("[data-cy=roomSelector]").select("Room 1", { force: true });
+      cy.wait(500);
+      cy.get("[data-cy=roomSelector]").should("exist");
+      cy.get("[data-cy=dateSelector]").should("exist").and("not.be.disabled");
+      cy.get("select").select("Room 1");
 
       cy.get("[data-cy=dateSelector]").clear();
 
-      cy.get("[data-cy=dateSelector]").type(date, { force: true });
+      cy.get("[data-cy=dateSelector]").type(date);
 
       cy.intercept("POST", `${Cypress.env("API_URL")}/bookings/book`).as(
         "bookingRequest"

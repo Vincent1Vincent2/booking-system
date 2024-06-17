@@ -20,8 +20,11 @@ describe("Book room without logging in", () => {
 describe("Book room on past dates", () => {
   beforeEach(() => {
     cy.visit("/");
+    cy.clearBookings();
 
     cy.login("fake@email.com", "password123");
+
+    cy.createBookings();
 
     cy.visit("/book-room");
 
@@ -42,11 +45,14 @@ describe("Book room on past dates", () => {
     const dates = [yesterday, dayBeforeYesterday].map(formatDate);
 
     dates.forEach((date) => {
-      cy.get("[data-cy=roomSelector]").select("Room 1", { force: true });
+      cy.wait(500);
+      cy.get("[data-cy=roomSelector]").should("exist");
+      cy.get("[data-cy=dateSelector]").should("exist").and("not.be.disabled");
+      cy.get("[data-cy=roomSelector]").select("Room 1");
 
       cy.get("[data-cy=dateSelector]").clear();
 
-      cy.get("[data-cy=dateSelector]").type(date, { force: true });
+      cy.get("[data-cy=dateSelector]").type(date);
 
       cy.intercept("POST", `${Cypress.env("API_URL")}/bookings/book`).as(
         "bookingRequest"
@@ -101,11 +107,14 @@ describe("Book already booked room", () => {
     const dates = [today, tomorrow, dayAfterTomorrow].map(formatDate);
 
     dates.forEach((date) => {
-      cy.get("[data-cy=roomSelector]").select("Room 1", { force: true });
+      cy.wait(500);
+      cy.get("[data-cy=roomSelector]").should("exist");
+      cy.get("[data-cy=dateSelector]").should("exist").and("not.be.disabled");
+      cy.get("[data-cy=roomSelector]").select("Room 1");
 
       cy.get("[data-cy=dateSelector]").clear();
 
-      cy.get("[data-cy=dateSelector]").type(date, { force: true });
+      cy.get("[data-cy=dateSelector]").type(date);
 
       cy.intercept("POST", `${Cypress.env("API_URL")}/bookings/book`).as(
         "failBookingRequest"
