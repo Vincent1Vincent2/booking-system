@@ -117,18 +117,92 @@ exports.removeBooking = async (req, res) => {
   }
 
   try {
-    const booking = await prisma.booking.update({
+    const booking = await prisma.booking.findUnique({
       where: { id: parseInt(bookingId) },
-      data: { archived: true },
     });
 
     if (!booking) {
       return res.status(404).json({ message: "Booking not found" });
     }
 
-    res.status(200).json({ message: "Booking archived successfully" });
+    if (booking.userId !== req.user.id) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to edit this booking" });
+    }
+
+    const updatedBooking = await prisma.booking.update({
+      where: { id: parseInt(bookingId) },
+      data: { archived: true },
+    });
+
+    res
+      .status(200)
+      .json({ updatedBooking }, { message: "Booking archived successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error archiving booking" });
+  }
+};
+
+exports.editBooking = async (req, res) => {
+  const { bookingId } = req.params;
+  const { date, roomId } = req.body;
+
+  if (!bookingId) {
+    return res.status(400).json({ message: "Booking ID not provided" });
+  }
+
+  if (!date && !roomId) {
+    return res.status(400).json({ message: "No fields to update provided" });
+  }
+
+  try {
+    const booking = await prisma.booking.findUnique({
+      where: { id: parseInt(bookingId) },
+    });
+
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    if (booking.userId !== req.user.id) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to edit this booking" });
+    }
+
+    if (date && roomId) {
+      const existingBooking = await prisma.booking.findFirst({
+        where: {
+          date: new Date(date),
+          roomId: parseInt(roomId),
+          archived: false,
+          id: { not: parseInt(bookingId) },
+        },
+      });
+
+      if (existingBooking) {
+        return res.status(400).json({
+          message: "There is already a booking for this date and room",
+        });
+      }
+    }
+
+    const updatedBooking = await prisma.booking.update({
+      where: { id: parseInt(bookingId) },
+      data: {
+        ...(date && { date: new Date(date) }),
+        ...(roomId && { roomId: parseInt(roomId) }),
+      },
+    });
+
+    res.status(200).json({
+      message: "Booking updated successfully",
+      booking: updatedBooking,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error updating booking" });
   }
 };
