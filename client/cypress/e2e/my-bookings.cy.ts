@@ -1,8 +1,8 @@
 describe("Check bookings", () => {
   beforeEach(() => {
-    cy.visit("https://booking-system-lovat.vercel.app/");
+    cy.visit("/");
 
-    //BADGE NUMBER CHECK SHOULD BE DONE
+    cy.get("[data-cy=myBookingsBadge]").contains(3);
 
     cy.get("[data-cy=myBookingsBtn]").click();
   });
