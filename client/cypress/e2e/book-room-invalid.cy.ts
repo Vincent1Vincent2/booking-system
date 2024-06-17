@@ -80,11 +80,11 @@ describe("Book room on past dates", () => {
 
 describe("Book already booked room", () => {
   beforeEach(() => {
+    cy.visit("/");
     cy.clearBookings();
 
-    cy.visit("/");
-
     cy.login("fake@email.com", "password123");
+
     cy.createBookings();
 
     cy.visit("/book-room");
