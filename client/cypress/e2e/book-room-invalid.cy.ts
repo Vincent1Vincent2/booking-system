@@ -42,11 +42,11 @@ describe("Book room on past dates", () => {
     const dates = [yesterday, dayBeforeYesterday].map(formatDate);
 
     dates.forEach((date) => {
-      cy.get("[data-cy=roomSelector]").select("Room 1");
+      cy.get("[data-cy=roomSelector]").select("Room 1", { force: true });
 
       cy.get("[data-cy=dateSelector]").clear();
 
-      cy.get("[data-cy=dateSelector]").type(date);
+      cy.get("[data-cy=dateSelector]").type(date, { force: true });
 
       cy.intercept("POST", `${Cypress.env("API_URL")}/bookings/book`).as(
         "bookingRequest"
@@ -101,11 +101,11 @@ describe("Book already booked room", () => {
     const dates = [today, tomorrow, dayAfterTomorrow].map(formatDate);
 
     dates.forEach((date) => {
-      cy.get("[data-cy=roomSelector]").select("Room 1");
+      cy.get("[data-cy=roomSelector]").select("Room 1", { force: true });
 
       cy.get("[data-cy=dateSelector]").clear();
 
-      cy.get("[data-cy=dateSelector]").type(date);
+      cy.get("[data-cy=dateSelector]").type(date, { force: true });
 
       cy.intercept("POST", `${Cypress.env("API_URL")}/bookings/book`).as(
         "failBookingRequest"
