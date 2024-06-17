@@ -21,6 +21,7 @@ exports.createBooking = async (req, res) => {
 
   const bookingDate = new Date(date);
   const now = new Date();
+  now.setHours(0, 0, 0, 0);
 
   if (bookingDate < now) {
     return res.status(400).json({ message: "Cannot book a date in the past" });

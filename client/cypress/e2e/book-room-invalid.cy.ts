@@ -47,7 +47,7 @@ describe("Book room on past dates", () => {
     const dates = [yesterday, dayBeforeYesterday].map(formatDate);
 
     dates.forEach((date) => {
-      cy.get("[data-cy=roomSelector]").select(1);
+      cy.get("[data-cy=roomSelector]").select(1, { force: true });
 
       cy.get("[data-cy=dateSelector]").clear();
 
@@ -110,7 +110,7 @@ describe("Book already booked room", () => {
     const dates = [today, tomorrow, dayAfterTomorrow].map(formatDate);
 
     dates.forEach((date) => {
-      cy.get("[data-cy=roomSelector]").select(1);
+      cy.get("[data-cy=roomSelector]").select(1, { force: true });
 
       cy.get("[data-cy=dateSelector]").clear();
 
