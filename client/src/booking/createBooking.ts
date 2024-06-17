@@ -1,3 +1,4 @@
+const { setupLoginForm } = require("../user/login");
 const { getRooms } = require("../room/getRooms.ts");
 const axios = require("axios");
 let bookingForm: HTMLFormElement | null;
@@ -9,6 +10,14 @@ export async function setupBookingForm() {
 
   try {
     const rooms = await getRooms();
+    if (rooms === undefined) {
+      const h1 = document.createElement("h1");
+      h1.innerHTML = "You need to login to book a room";
+      document.getElementById("app")?.appendChild(h1);
+
+      localStorage.setItem("redirectAfterLogin", window.location.pathname);
+      setupLoginForm();
+    }
 
     if (!rooms || rooms.length === 0) {
       throw new Error("No rooms available.");
