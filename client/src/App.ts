@@ -11,9 +11,27 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.addEventListener("login", async () => {
     await updateHeader();
-    window.router("/");
+    const redirectUrl = localStorage.getItem("redirectAfterLogin");
+    if (redirectUrl) {
+      localStorage.removeItem("redirectAfterLogin");
+      router(redirectUrl);
+    } else {
+      router("/");
+    }
   });
+
   document.addEventListener("logout", async () => {
     await updateHeader();
+    const redirectUrl = localStorage.getItem("redirectAfterLogin");
+    if (redirectUrl) {
+      localStorage.removeItem("redirectAfterLogin");
+      router(redirectUrl);
+    } else {
+      router("/");
+    }
+  });
+
+  document.addEventListener("register", async () => {
+    router("/login");
   });
 });

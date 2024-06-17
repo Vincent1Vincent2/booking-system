@@ -9,7 +9,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
-    "types": ["cypress", "node"]
+    "types": ["cypress", "node", "axios"]
   },
   "include": ["src", "cypress", "**/*.ts", "prisma"],
   "exclude": ["node_modules", "dist"]

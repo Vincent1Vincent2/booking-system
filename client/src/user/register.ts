@@ -1,5 +1,3 @@
-import { setupLoginForm } from "./login";
-
 const axios = require("axios");
 const {
   isProduction,
@@ -84,7 +82,8 @@ export function setupRegisterForm() {
         successMessage.remove();
       }, 2000);
       closeRegisterForm();
-      setupLoginForm();
+      const event = new CustomEvent("register");
+      document.dispatchEvent(event);
 
       console.log(response.data);
     } catch (error) {

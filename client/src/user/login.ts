@@ -57,7 +57,7 @@ export function setupLoginForm() {
         successMessage.remove();
       }, 2000);
       closeLoginForm();
-      const user = await axios.get(`${process.env.API_URL}/auth/user`, {
+      await axios.get(`${process.env.API_URL}/auth/user`, {
         withCredentials: true,
       });
       const event = new CustomEvent("login");
