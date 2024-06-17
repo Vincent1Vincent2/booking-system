@@ -1,5 +1,6 @@
 describe("Book Room", () => {
   beforeEach(() => {
+    cy.clearBookings();
     cy.visit("/");
 
     cy.login("fake@email.com", "password123");
@@ -30,7 +31,7 @@ describe("Book Room", () => {
     const dates = [today, tomorrow, dayAfterTomorrow].map(formatDate);
 
     dates.forEach((date) => {
-      cy.get("[data-cy=roomSelector]").select(1, { force: true });
+      cy.get("[data-cy=roomSelector]").select("Room 1", { force: true });
 
       cy.get("[data-cy=dateSelector]").clear();
 

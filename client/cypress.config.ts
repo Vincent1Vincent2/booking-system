@@ -1,12 +1,25 @@
-import { PrismaClient } from "@prisma/client";
 import { defineConfig } from "cypress";
-const prisma = new PrismaClient();
+
+async function clearBookings() {
+  const { PrismaClient } = await import("@prisma/client");
+  const prisma = new PrismaClient();
+
+  try {
+    await prisma.booking.deleteMany({});
+    return null;
+  } catch (error) {
+    console.error("Error clearing bookings:", error);
+    throw error;
+  } finally {
+    await prisma.$disconnect();
+  }
+}
 
 export default defineConfig({
   e2e: {
     baseUrl: "https://booking-system-lovat.vercel.app",
     setupNodeEvents(on, config) {
-      /*      on("task", { clear }); */
+      on("task", { clearBookings });
     },
     env: {
       BASE_URL: "https://booking-system-lovat.vercel.app",
@@ -14,7 +27,3 @@ export default defineConfig({
     },
   },
 });
-
-async function clear() {
-  await prisma.booking.deleteMany({});
-}

@@ -11,6 +11,6 @@
     "outDir": "./dist",
     "types": ["cypress", "node"]
   },
-  "include": ["src", "cypress", "**/*.ts"],
+  "include": ["src", "cypress", "**/*.ts", "prisma"],
   "exclude": ["node_modules", "dist"]
 }

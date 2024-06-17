@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "npm run generate",
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
     "serve": "node server.js",
     "vercel-build": "npm run build",
     "dev": "webpack serve --mode development",
-    "test": "cypress run",
-    "generate": "prisma generate --schema=../server/prisma/schema.prisma"
+    "generate": "prisma generate --schema=./prisma/schema.prisma",
+    "cypress:open": "npm run generate && cypress open",
+    "cypress:run": "npm run generate && cypress run"
   },
   "keywords": [],
   "author": "",

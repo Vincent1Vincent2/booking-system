@@ -1,6 +1,12 @@
 describe("Check bookings", () => {
   beforeEach(() => {
+    cy.clearBookings();
+
     cy.visit("/");
+
+    cy.login("fake@email.com", "password123");
+
+    cy.createBookings();
 
     cy.get("[data-cy=myBookingsBadge]").contains(3);
 
