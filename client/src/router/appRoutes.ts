@@ -4,12 +4,13 @@ const {
   closeBookingForm,
   setupBookingForm,
 } = require("../booking/createBooking");
+const { setupMyBookings } = require("../booking/myBooking");
 import { Route } from "./interface";
 
 const appRoutes: Route[] = [
   {
     path: "/",
-    element: () => `<span>Yo home</span>`,
+    element: () => ``,
     init: () => {
       closeLoginForm();
       closeRegisterForm();
@@ -18,7 +19,7 @@ const appRoutes: Route[] = [
   },
   {
     path: "/login",
-    element: () => `<span>Yo this login</span>`,
+    element: () => ``,
     init: () => {
       closeRegisterForm();
       closeBookingForm();
@@ -27,7 +28,7 @@ const appRoutes: Route[] = [
   },
   {
     path: "/register",
-    element: () => `<span>Yo this register</span>`,
+    element: () => ``,
     init: () => {
       closeLoginForm();
       closeBookingForm();
@@ -36,11 +37,18 @@ const appRoutes: Route[] = [
   },
   {
     path: "/book-room",
-    element: () => `<span>Yo this booking rooms</span>`,
+    element: () => ``,
     init: () => {
       closeLoginForm();
       closeRegisterForm();
       setupBookingForm();
+    },
+  },
+  {
+    path: "/my-bookings",
+    element: () => ``,
+    init: () => {
+      setupMyBookings();
     },
   },
 ];

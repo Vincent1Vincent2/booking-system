@@ -24,7 +24,7 @@ describe("My bookings", () => {
     cy.get("[data-cy=confirmDeleteBtn]").click();
 
     cy.get("[data-cy=bookingsContainer]").children().should("have.length", 2);
-    cy.get("[data-cy=myBookingsBadge]").contains(2);
+    cy.get("[data-cy=bookingsBadge]").contains(2);
   });
 
   it("edit booking", () => {
