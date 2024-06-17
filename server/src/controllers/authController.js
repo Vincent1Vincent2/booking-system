@@ -41,7 +41,7 @@ exports.register = async (req, res) => {
 
   const noPassword = [userWithoutPassword];
 
-  return res.status(200).json({ token, user: noPassword });
+  return res.status(200).json({ user: noPassword });
 };
 
 exports.login = async (req, res) => {
@@ -83,4 +83,14 @@ exports.getUser = async (req, res) => {
   const { password: _, ...userWithoutPassword } = user;
 
   res.status(200).json(userWithoutPassword);
+};
+
+exports.logout = async (req, res) => {
+  res.clearCookie("access_token", {
+    httpOnly: true,
+    sameSite: "none",
+    secure: true,
+  });
+
+  return res.status(200).json({ message: "Successfully logged out" });
 };
