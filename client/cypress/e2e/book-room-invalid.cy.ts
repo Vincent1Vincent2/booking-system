@@ -82,7 +82,15 @@ describe("Book already booked room", () => {
   beforeEach(() => {
     cy.visit("/");
 
+    cy.login("fake@email.com", "password123");
+
     cy.visit("/book-room");
+
+    cy.get("[data-cy=bookButton]").click();
+
+    cy.get("[data-cy=roomSelector]")
+      .children()
+      .should("have.length.at.least", 3);
   });
 
   it("should not allow booking already booked dates", () => {

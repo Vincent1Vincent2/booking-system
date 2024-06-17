@@ -50,7 +50,4 @@ cron.schedule("0 0 * * *", () => {
     });
 });
 
-process.on("SIGINT", async () => {
-  await prisma.$disconnect();
-  process.exit(0);
-});
+module.exports = archivePastBookings;
