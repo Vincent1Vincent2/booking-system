@@ -116,6 +116,16 @@ describe("Book already booked room", () => {
 
       cy.get("[data-cy=dateSelector]").type(date);
 
+      cy.get("[data-cy=bookBtn]").click();
+    });
+
+    dates.forEach((date) => {
+      cy.get("[data-cy=roomSelector]").select(1, { force: true });
+
+      cy.get("[data-cy=dateSelector]").clear();
+
+      cy.get("[data-cy=dateSelector]").type(date);
+
       cy.intercept("POST", `${Cypress.env("API_URL")}/bookings/book`).as(
         "bookingRequest"
       );
