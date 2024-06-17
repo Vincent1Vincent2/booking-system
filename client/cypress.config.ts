@@ -1,10 +1,12 @@
+import { PrismaClient } from "@prisma/client";
 import { defineConfig } from "cypress";
+const prisma = new PrismaClient();
 
 export default defineConfig({
   e2e: {
     baseUrl: "https://booking-system-lovat.vercel.app",
     setupNodeEvents(on, config) {
-      // implement node event listeners here
+      /*      on("task", { clear }); */
     },
     env: {
       BASE_URL: "https://booking-system-lovat.vercel.app",
@@ -12,3 +14,7 @@ export default defineConfig({
     },
   },
 });
+
+async function clear() {
+  await prisma.booking.deleteMany({});
+}

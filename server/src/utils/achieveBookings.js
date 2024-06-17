@@ -3,7 +3,8 @@ const cron = require("node-cron");
 
 const archivePastBookings = async () => {
   const now = new Date();
-  console.log(`Current date and time: ${now}`);
+  now.setHours(0, 0, 0, 0);
+  console.log(`Current date and time (start of day): ${now}`);
 
   try {
     const pastBookings = await prisma.booking.findMany({
