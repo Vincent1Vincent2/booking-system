@@ -77,7 +77,10 @@ describe("Book room on past dates", () => {
         }
       });
 
-      cy.get("body").should("contain", "Booking unsuccessful");
+      cy.get("[data-cy=errorMessage]").should(
+        "contain",
+        "Cannot book a date in the past"
+      );
     });
   });
 });
@@ -139,7 +142,10 @@ describe("Book already booked room", () => {
         }
       });
 
-      cy.get("body").should("contain", "This day is already booked");
+      cy.get("[data-cy=errorMessage]").should(
+        "contain",
+        "Booking already exists for this date"
+      );
     });
   });
 });
