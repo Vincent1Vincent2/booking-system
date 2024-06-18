@@ -62,8 +62,6 @@ export async function editButton(
       console.error(result.error);
       alert("Failed to update booking.");
     } else {
-      alert("Booking updated successfully.");
-
       location.reload();
     }
   });

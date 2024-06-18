@@ -34,7 +34,8 @@ describe("My bookings", () => {
     const newDate = new Date(today);
     newDate.setDate(today.getDate() + 1);
 
-    cy.get("[data-cy=dateSelector]").clear().type(formatDate(newDate));
+    cy.get("[data-cy=dateSelector]").first().clear();
+    cy.get("[data-cy=dateSelector]").first().type(formatDate(newDate));
     cy.get("[data-cy=saveBookingBtn]").click();
 
     cy.get("[data-cy=bookingsContainer]")
@@ -47,11 +48,12 @@ describe("My bookings", () => {
     cy.get("[data-cy=bookingsContainer]")
       .children()
       .first()
-      .find("[data-cy=bookingDate]")
+      .find("[data-cy=dateSelector]")
       .invoke("text")
       .then((conflictingDate) => {
         cy.get("[data-cy=editBooking]").eq(1).click();
-        cy.get("[data-cy=dateSelector]").clear().type(conflictingDate);
+        cy.get("[data-cy=dateSelector]").first().clear();
+        cy.get("[data-cy=dateSelector]").type(conflictingDate);
         cy.get("[data-cy=saveBookingBtn]").click();
 
         cy.get("body").should(
