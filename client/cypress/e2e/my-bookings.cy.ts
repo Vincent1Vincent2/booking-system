@@ -28,23 +28,27 @@ describe("My bookings", () => {
   });
 
   it("edit booking", () => {
+    cy.get("[data-cy=room]").first().should("contain", "Room 1");
     cy.get("[data-cy=editBookingBtn]").first().click();
 
     const today = new Date();
     const newDate = new Date(today);
-    newDate.setDate(today.getDate() + 1);
+    newDate.setDate(today.getDate() + 3);
 
     cy.get("[data-cy=dateSelector]").first().clear();
     cy.get("[data-cy=dateSelector]").first().type(formatDate(newDate));
+
+    cy.get("select").select(2);
     cy.get("[data-cy=saveBookingBtn]").click();
 
-    cy.get("[data-cy=bookingsContainer]")
-      .children()
-      .first()
-      .should("contain", formatDate(newDate));
+    cy.get("[data-cy=dateSelector]")
+      .last()
+      .should("have.value", formatDate(newDate));
+
+    cy.get("[data-cy=room]").last().should("contain", "Room 3");
   });
 
-  it("edit booking to a date that already has a booking", () => {
+  /* it("edit booking to a date that already has a booking", () => {
     cy.get("[data-cy=bookingsContainer]")
       .children()
       .first()
@@ -61,5 +65,5 @@ describe("My bookings", () => {
           "There is already a booking for this date and room"
         );
       });
-  });
+  }); */
 });

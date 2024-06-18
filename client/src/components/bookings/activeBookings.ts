@@ -9,6 +9,7 @@ export function activeBookingsElement(booking: Booking, roomName: string) {
 
   const room = document.createElement("p");
   room.textContent = roomName;
+  room.setAttribute("data-cy", "room");
 
   const dateInput = document.createElement("input");
   dateInput.id = `dateInput-${booking.roomId}`;
