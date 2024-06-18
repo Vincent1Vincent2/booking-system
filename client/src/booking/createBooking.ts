@@ -1,4 +1,4 @@
-const { updateBookingBadge } = require("../utils/bookingBadge");
+const { updateBookingBadge } = require("../utils/bookingBadge.ts");
 
 const { createBookingError } = require("../error/createBookingError.ts");
 const { createBooking } = require("../utils/api/bookings.ts");
