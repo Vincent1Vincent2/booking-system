@@ -1,3 +1,5 @@
+const { updateBookingBadge } = require("../utils/bookingBadge");
+
 const { createBookingError } = require("../error/createBookingError.ts");
 const { createBooking } = require("../utils/api/bookings.ts");
 const { roomError } = require("../error/roomError.ts");
@@ -63,6 +65,7 @@ export async function setupBookingForm() {
       const booking = await createBooking(roomId, date);
 
       if (!booking.error) {
+        await updateBookingBadge();
         const successMessage = document.createElement("p");
         successMessage.innerText = "Booking successful";
         document.getElementById("app")?.appendChild(successMessage);

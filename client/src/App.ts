@@ -1,4 +1,5 @@
 const { updateHeader } = require("./header/header.ts");
+const { updateBookingBadge } = require("./utils/bookingBadge");
 const { router } = require("./router/router");
 
 window.router = router;
@@ -8,6 +9,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const currentPath = window.location.pathname;
 
   await updateHeader();
+
+  await updateBookingBadge();
   window.router(currentPath);
 
   document.addEventListener("login", async () => {

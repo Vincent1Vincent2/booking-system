@@ -17,7 +17,7 @@ export function renderLoggedInHeader() {
       <li id="logoutButton" data-cy="logoutButton">Logout</li>
       <li id="homeButton" data-cy="homeButton">Home</li>
       <li id="bookButton" data-cy="bookButton">Book A Room</li>
-            <li id="bookingsButton" data-cy="bookingsButton">My Bookings</li>
+      <li id="bookingsButton" data-cy="bookingsButton">My Bookings <span id="bookingsBadge" data-cy="bookingsBadge"></span></li>
     </ul>
   `;
   return nav;

@@ -4,7 +4,7 @@ const {
 } = require("../components/header/header.ts");
 const { logout } = require("../utils/api/user");
 
-import { isAuthenticated } from "../utils/api/user";
+const { isAuthenticated } = require("../utils/api/user");
 let header: HTMLHeadingElement | null;
 
 export async function updateHeader() {
