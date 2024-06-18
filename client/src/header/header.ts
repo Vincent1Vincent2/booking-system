@@ -2,9 +2,9 @@ const {
   renderLoggedInHeader,
   renderLoggedOutHeader,
 } = require("../components/header/header.ts");
-const { logout } = require("../utils/logout.ts");
+const { logout } = require("../utils/api/logout.ts");
 
-import { isAuthenticated } from "../user/auth";
+import { isAuthenticated } from "../utils/api/user";
 let header: HTMLHeadingElement | null;
 
 export async function updateHeader() {

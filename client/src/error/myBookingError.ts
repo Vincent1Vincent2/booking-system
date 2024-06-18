@@ -1,30 +1,28 @@
-const { AxiosError } = require("axios");
+const { setupLoginForm } = require("../user/login.ts");
 
-export function createBookingError(error: typeof AxiosError) {
-  if (error) {
-    createError(error.data.message);
-  }
-}
-
-export function archivedBookingError(
-  errorStatus: number,
-  archivedContainer: HTMLElement
-) {
-  if (errorStatus === 404) {
-    noArchivedBookings(archivedContainer);
-  } else {
-    generalError(archivedContainer);
-  }
-}
-
-export function currentBookingError(
+function currentBookingError(
   errorStatus: number,
   currentContainer: HTMLElement
 ) {
   if (errorStatus === 404) {
     noCurrentBookings(currentContainer);
+  } else if (errorStatus === 401) {
+    unauthorizedError();
   } else {
     generalError(currentContainer);
+  }
+}
+
+function archivedBookingError(
+  errorStatus: number,
+  archivedContainer: HTMLElement
+) {
+  if (errorStatus === 404) {
+    noArchivedBookings(archivedContainer);
+  } else if (errorStatus === 401) {
+    return;
+  } else {
+    generalError(archivedContainer);
   }
 }
 
@@ -53,17 +51,13 @@ function generalError(
   }
 }
 
-function createError(errorMessage: string) {
-  const h3 = document.createElement("h3");
-  h3.innerHTML = errorMessage || "Unknown error occurred";
-  document.getElementById("app")?.appendChild(h3);
-  setTimeout(() => {
-    h3.remove();
-  }, 2000);
+function unauthorizedError() {
+  const errorMessageSpan = document.getElementById("errorMessage");
+  errorMessageSpan!.innerHTML = "You need to login to access your bookings";
+  setupLoginForm();
 }
 
 module.exports = {
-  createBookingError,
   currentBookingError,
   archivedBookingError,
 };

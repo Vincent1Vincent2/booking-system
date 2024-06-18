@@ -1,10 +1,9 @@
-const {
-  createBookingError,
-} = require("../components/errorMessages/bookingErrors.ts");
-const { createBooking } = require("../utils/bookings.ts");
+const { createBookingError } = require("../error/createBookingError.ts");
+const { createBooking } = require("../utils/api/bookings.ts");
+const { roomError } = require("../error/roomError.ts");
 
-const { setupLoginForm } = require("../user/login");
-const { getRooms } = require("../room/getRooms.ts");
+const { setupLoginForm } = require("../user/login.ts");
+const { getRooms } = require("../utils/api/room.ts");
 const axios = require("axios");
 let bookingForm: HTMLFormElement | null;
 
@@ -15,17 +14,11 @@ export async function setupBookingForm() {
 
   try {
     const rooms = await getRooms();
-    if (rooms === undefined) {
-      const h1 = document.createElement("h1");
-      h1.innerHTML = "You need to login to book a room";
-      document.getElementById("app")?.appendChild(h1);
-
+    if (rooms.error) {
+      roomError(rooms);
       localStorage.setItem("redirectAfterLogin", window.location.pathname);
       setupLoginForm();
-    }
-
-    if (!rooms || rooms.length === 0) {
-      throw new Error("No rooms available.");
+      return;
     }
 
     if (bookingForm) {
@@ -33,7 +26,7 @@ export async function setupBookingForm() {
     }
 
     bookingForm = document.createElement("form");
-    bookingForm.id = "bookingForm"; // Add an id to the form for reference
+    bookingForm.id = "bookingForm";
 
     const roomSelector = document.createElement("select");
     for (let room of rooms) {

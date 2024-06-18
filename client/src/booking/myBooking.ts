@@ -8,11 +8,11 @@ const {
 const {
   archivedBookingError,
   currentBookingError,
-} = require("../components/errorMessages/bookingErrors.ts");
+} = require("../error/myBookingError.ts");
 const {
   getMyBookings,
   getMyArchivedBookings,
-} = require("../utils/bookings.ts");
+} = require("../utils/api/bookings.ts");
 let myBookings: HTMLElement | null;
 let currentContainer: HTMLDivElement | null;
 let archivedContainer: HTMLDivElement | null;

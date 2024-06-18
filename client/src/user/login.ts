@@ -1,4 +1,5 @@
 const axios = require("axios");
+const { login } = require("../utils/api/user.ts");
 let loginForm: HTMLFormElement | null;
 
 export function setupLoginForm() {
@@ -38,33 +39,7 @@ export function setupLoginForm() {
     const email = emailInput.value;
     const password = passwordInput.value;
 
-    try {
-      const response = await axios.post(
-        `${process.env.API_URL}/auth/login`,
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      const successMessage = document.createElement("p");
-      successMessage.innerText = "Login successful";
-      document.getElementById("app")?.appendChild(successMessage);
-
-      setTimeout(() => {
-        successMessage.remove();
-      }, 2000);
-      closeLoginForm();
-      await axios.get(`${process.env.API_URL}/auth/user`, {
-        withCredentials: true,
-      });
-      const event = new CustomEvent("login");
-      document.dispatchEvent(event);
-    } catch (error) {
-      console.error(error);
-    }
+    await login(email, password);
   });
 }
 

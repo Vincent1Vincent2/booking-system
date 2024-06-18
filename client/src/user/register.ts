@@ -1,9 +1,9 @@
-const axios = require("axios");
+const { register } = require("../utils/api/user.ts");
 const {
   isProduction,
   loadRecaptcha,
   mockRecaptcha,
-} = require("../utils/recaptcha");
+} = require("../utils/api/recaptcha");
 let registerForm: HTMLFormElement | null;
 
 export function setupRegisterForm() {
@@ -64,31 +64,7 @@ export function setupRegisterForm() {
       return;
     }
 
-    try {
-      const response = await axios.post(
-        `${process.env.API_URL}/auth/register`,
-        {
-          email,
-          password,
-          recaptchaToken,
-        }
-      );
-
-      const successMessage = document.createElement("p");
-      successMessage.innerText = "Registration successful";
-      document.body.appendChild(successMessage);
-
-      setTimeout(() => {
-        successMessage.remove();
-      }, 2000);
-      closeRegisterForm();
-      const event = new CustomEvent("register");
-      document.dispatchEvent(event);
-
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+    await register(email, password, recaptchaToken);
 
     if (isProduction) {
       window.grecaptcha.reset();
