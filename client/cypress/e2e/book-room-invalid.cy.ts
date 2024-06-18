@@ -8,7 +8,10 @@ describe("Book room without logging in", () => {
   });
 
   it("should not display booking form and should prompt to log in", () => {
-    cy.get("body").should("contain", "To book you need to log in");
+    cy.get("[data-cy=errorMessage]").should(
+      "contain",
+      "You need to login to book a room"
+    );
     cy.get("[data-cy=loginBtn]").should("exist");
 
     cy.get("[data-cy=roomSelector]").should("not.exist");

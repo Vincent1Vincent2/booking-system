@@ -53,6 +53,22 @@ export async function login(email: string, password: string) {
   }
 }
 
+export async function logout() {
+  try {
+    await axios.post(
+      `${process.env.API_URL}/auth/logout`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+    const event = new CustomEvent("logout");
+    document.dispatchEvent(event);
+  } catch (error) {
+    console.error("Logout failed:", error);
+  }
+}
+
 export async function isAuthenticated() {
   try {
     const response = await axios.get(`${process.env.API_URL}/auth/user`, {

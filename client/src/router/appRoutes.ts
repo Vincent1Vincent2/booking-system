@@ -48,6 +48,8 @@ const appRoutes: Route[] = [
     path: "/my-bookings",
     element: () => ``,
     init: () => {
+      closeLoginForm();
+      closeRegisterForm();
       setupMyBookings();
     },
   },

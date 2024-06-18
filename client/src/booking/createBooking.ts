@@ -71,6 +71,7 @@ export async function setupBookingForm() {
         }, 2000);
       } else {
         createBookingError(booking.error);
+        localStorage.setItem("redirectAfterLogin", window.location.pathname);
       }
     });
   } catch (error) {

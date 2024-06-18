@@ -54,6 +54,7 @@ function generalError(
 function unauthorizedError() {
   const errorMessageSpan = document.getElementById("errorMessage");
   errorMessageSpan!.innerHTML = "You need to login to access your bookings";
+  localStorage.setItem("redirectAfterLogin", window.location.pathname);
   setupLoginForm();
 }
 

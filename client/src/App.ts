@@ -4,6 +4,7 @@ const { router } = require("./router/router");
 window.router = router;
 
 document.addEventListener("DOMContentLoaded", async () => {
+  const errorMessage = document.getElementById("errorMessage");
   const currentPath = window.location.pathname;
 
   await updateHeader();
@@ -11,6 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.addEventListener("login", async () => {
     await updateHeader();
+    errorMessage?.remove();
     const redirectUrl = localStorage.getItem("redirectAfterLogin");
     if (redirectUrl) {
       localStorage.removeItem("redirectAfterLogin");
@@ -32,6 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   document.addEventListener("register", async () => {
+    errorMessage?.remove();
     router("/login");
   });
 });

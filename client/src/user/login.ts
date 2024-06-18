@@ -1,4 +1,3 @@
-const axios = require("axios");
 const { login } = require("../utils/api/user.ts");
 let loginForm: HTMLFormElement | null;
 

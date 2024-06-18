@@ -11,7 +11,7 @@ export async function getMyBookings() {
     );
     return bookings.data;
   } catch (error: typeof AxiosError) {
-    console.error("Getting bookings failed:", error);
+    console.error("Getting current and future bookings failed:", error);
     return { error: error.response || error.message };
   }
 }
@@ -30,7 +30,7 @@ export async function getMyArchivedBookings() {
       return { error: bookings.statusText };
     }
   } catch (error: typeof AxiosError) {
-    console.error("Getting bookings failed:", error);
+    console.error("Getting archived bookings failed:", error);
     return { error: error.response || error.message };
   }
 }
@@ -50,8 +50,7 @@ export async function createBooking(roomId: number, date: string) {
       return { error: booking.statusText };
     }
   } catch (error: typeof AxiosError) {
-    console.log(error.response);
-    console.error("Getting bookings failed:", error);
+    console.error("Creating bookings failed:", error);
     return { error: error.response || error.message };
   }
 }
