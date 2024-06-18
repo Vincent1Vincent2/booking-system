@@ -1,6 +1,6 @@
 const { setupLoginForm } = require("../user/login.ts");
 
-function currentBookingError(
+export function currentBookingError(
   errorStatus: number,
   currentContainer: HTMLElement
 ) {
@@ -13,7 +13,7 @@ function currentBookingError(
   }
 }
 
-function archivedBookingError(
+export function archivedBookingError(
   errorStatus: number,
   archivedContainer: HTMLElement
 ) {

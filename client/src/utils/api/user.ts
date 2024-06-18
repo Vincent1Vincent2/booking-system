@@ -1,3 +1,5 @@
+const { AxiosError } = require("axios");
+const { loginError } = require("../../error/loginError");
 const axios = require("axios");
 
 export async function register(
@@ -49,6 +51,7 @@ export async function login(email: string, password: string) {
       return { error: user.statusText };
     }
   } catch (error: typeof AxiosError) {
+    loginError(error);
     return { error: error.response || error.message };
   }
 }

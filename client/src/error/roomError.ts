@@ -1,6 +1,6 @@
 const { AxiosError } = require("axios");
 
-function roomError(error: typeof AxiosError) {
+export function roomError(error: typeof AxiosError) {
   if (error) {
     createErrorMessage();
   }
