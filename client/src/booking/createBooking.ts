@@ -33,6 +33,7 @@ export async function setupBookingForm() {
     const roomSelector = document.createElement("select");
     for (let room of rooms) {
       const roomOption = document.createElement("option");
+      roomOption.id = `room-${room.id}`;
       roomOption.value = room.id.toString();
       roomOption.textContent = room.name;
       roomSelector.appendChild(roomOption);
