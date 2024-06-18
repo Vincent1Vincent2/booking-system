@@ -1,4 +1,5 @@
 const { removeBooking } = require("../../utils/api/bookings");
+const { updateBookingBadge } = require("../../utils/bookingBadge");
 
 export function removeButton(id: number, container: HTMLElement) {
   const removeButton = document.createElement("button");
@@ -15,6 +16,7 @@ export function removeButton(id: number, container: HTMLElement) {
     } else {
       container.remove();
       alert("Booking removed successfully.");
+      await updateBookingBadge();
     }
   });
 }
