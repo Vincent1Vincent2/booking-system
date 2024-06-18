@@ -34,3 +34,24 @@ export async function getMyArchivedBookings() {
     return { error: error.response || error.message };
   }
 }
+
+export async function createBooking(roomId: number, date: string) {
+  try {
+    const booking = await axios.post(
+      `${process.env.API_URL}/bookings/book`,
+      { roomId, date },
+      {
+        withCredentials: true,
+      }
+    );
+    if (booking.status === 200) {
+      return booking.data;
+    } else {
+      return { error: booking.statusText };
+    }
+  } catch (error: typeof AxiosError) {
+    console.log(error.response);
+    console.error("Getting bookings failed:", error);
+    return { error: error.response || error.message };
+  }
+}

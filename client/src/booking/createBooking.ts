@@ -1,3 +1,8 @@
+const {
+  createBookingError,
+} = require("../components/errorMessages/bookingErrors.ts");
+const { createBooking } = require("../utils/bookings.ts");
+
 const { setupLoginForm } = require("../user/login");
 const { getRooms } = require("../room/getRooms.ts");
 const axios = require("axios");
@@ -62,27 +67,17 @@ export async function setupBookingForm() {
       const roomId = Number(roomSelector.value);
       const date = dateInput.value;
 
-      try {
-        const response = await axios.post(
-          `${process.env.API_URL}/bookings/book`,
-          {
-            roomId,
-            date: new Date(date).toISOString(),
-          },
-          {
-            withCredentials: true,
-          }
-        );
+      const booking = await createBooking(roomId, date);
+
+      if (!booking.error) {
         const successMessage = document.createElement("p");
         successMessage.innerText = "Booking successful";
         document.getElementById("app")?.appendChild(successMessage);
-
         setTimeout(() => {
           successMessage.remove();
         }, 2000);
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
+      } else {
+        createBookingError(booking.error);
       }
     });
   } catch (error) {

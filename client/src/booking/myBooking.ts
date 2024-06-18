@@ -1,5 +1,15 @@
 import { Booking } from "@prisma/client";
 const {
+  archivedBookingsElement,
+} = require("../components/bookings/archivedBookings.ts");
+const {
+  activeBookingsElement,
+} = require("../components/bookings/activeBookings.ts");
+const {
+  archivedBookingError,
+  currentBookingError,
+} = require("../components/errorMessages/bookingErrors.ts");
+const {
   getMyBookings,
   getMyArchivedBookings,
 } = require("../utils/bookings.ts");
@@ -28,10 +38,12 @@ export async function setupMyBookings() {
     }
 
     myBookings = document.createElement("main");
-    myBookings.id = "bookingsContainer";
     myBookings.setAttribute("data-cy", "bookingsContainer");
+    myBookings.id = "bookingsContainer";
+
     currentContainer = document.createElement("div");
     currentContainer.id = "currentBookings";
+
     archivedContainer = document.createElement("div");
     archivedContainer.id = "archivedBookings";
 
@@ -40,8 +52,8 @@ export async function setupMyBookings() {
         const activeBooking = activeBookingsElement(booking);
         myBookings!.appendChild(activeBooking);
       });
-    } else if (bookings.error.status === 404) {
-      noCurrentBookings();
+    } else {
+      currentBookingError(bookings.error.status, currentContainer);
     }
 
     if (!archivedBookings.error) {
@@ -49,8 +61,8 @@ export async function setupMyBookings() {
         const archivedBooking = archivedBookingsElement(booking);
         myBookings!.appendChild(archivedBooking);
       });
-    } else if (archivedBookings.error.status === 404) {
-      noArchivedBookings();
+    } else {
+      archivedBookingError(archivedBookings.error.status, archivedContainer);
     }
 
     document.getElementById("app")?.appendChild(myBookings);
@@ -70,56 +82,4 @@ export function closeMyBooking() {
     archivedContainer?.remove();
     archivedContainer = null;
   }
-}
-
-function activeBookingsElement(booking: Booking) {
-  const activeBooking = document.createElement("div");
-  activeBooking.id = booking.id.toString();
-  activeBooking.setAttribute("data-cy", "booking");
-
-  const room = document.createElement("p");
-  room.textContent = "Room " + booking.roomId;
-
-  const dateInput = document.createElement("input");
-  dateInput.type = "date";
-  dateInput.disabled = true;
-  dateInput.value = booking.date.toString().substring(0, 10);
-  dateInput.name = "date";
-  dateInput.setAttribute("data-cy", "dateSelector");
-
-  activeBooking.appendChild(room);
-  activeBooking.appendChild(dateInput);
-
-  return activeBooking;
-}
-
-function archivedBookingsElement(booking: Booking) {
-  const archivedBooking = document.createElement("div");
-  archivedBooking.id = booking.id.toString();
-  archivedBooking.setAttribute("data-cy", "booking");
-
-  const room = document.createElement("p");
-  room.textContent = "Room " + booking.roomId;
-
-  const dateInput = document.createElement("p");
-  dateInput.innerHTML = booking.date.toString().substring(0, 10);
-  dateInput.setAttribute("data-cy", "date");
-
-  archivedBooking.appendChild(room);
-  archivedBooking.appendChild(dateInput);
-
-  return archivedBooking;
-}
-
-function noCurrentBookings() {
-  const h3 = document.createElement("h3");
-  h3.innerHTML = "No upcoming Bookings";
-  currentContainer?.appendChild(h3);
-}
-
-function noArchivedBookings() {
-  const h3 = document.createElement("h3");
-  h3.innerHTML = "No Archived Bookings";
-
-  archivedContainer?.appendChild(h3);
 }
