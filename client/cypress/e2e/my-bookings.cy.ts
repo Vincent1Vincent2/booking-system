@@ -12,7 +12,7 @@ describe("My bookings", () => {
 
     cy.get("[data-cy=bookingsBadge]").contains(3);
 
-    cy.get("[data-cy=bookingsButton]").click();
+    cy.visit("/my-bookings");
   });
 
   it("check my bookings", () => {
@@ -28,7 +28,7 @@ describe("My bookings", () => {
   });
 
   it("edit booking", () => {
-    cy.get("[data-cy=editBooking]").first().click();
+    cy.get("[data-cy=editBookingBtn]").first().click();
 
     const today = new Date();
     const newDate = new Date(today);
