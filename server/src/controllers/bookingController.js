@@ -128,20 +128,19 @@ exports.removeBooking = async (req, res) => {
     if (booking.userId !== req.user.id) {
       return res
         .status(403)
-        .json({ message: "You are not authorized to edit this booking" });
+        .json({ message: "You are not authorized to remove this booking" });
     }
 
-    const updatedBooking = await prisma.booking.update({
+    const deletedBooking = await prisma.booking.delete({
       where: { id: parseInt(bookingId) },
-      data: { archived: true },
     });
 
     res
       .status(200)
-      .json({ updatedBooking }, { message: "Booking archived successfully" });
+      .json({ message: "Booking removed successfully", deletedBooking });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error archiving booking" });
+    console.error("Error removing booking:", error);
+    res.status(500).json({ message: "Error removing booking" });
   }
 };
 

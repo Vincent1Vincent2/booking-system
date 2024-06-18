@@ -12,8 +12,8 @@ const router = express.Router();
 router.post("/book", authenticateToken, createBooking);
 router.get("/bookings", authenticateToken, getBookings);
 router.get("/bookings/archived", authenticateToken, getPastBookings);
-router.delete("/:id", authenticateToken, removeBooking);
-router.put("/:id", authenticateToken, editBooking);
+router.delete("/:bookingId", authenticateToken, removeBooking);
+router.put("/:bookingId", authenticateToken, editBooking);
 router.get("/protected", authenticateToken, (req, res) => {
   res.json({ message: "This is protected data" });
 });

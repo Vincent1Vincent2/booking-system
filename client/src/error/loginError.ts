@@ -9,7 +9,10 @@ export function loginError(error: typeof AxiosError) {
 
 function createErrorMessage(errorMessage: string) {
   const errorMessageSpan = document.getElementById("errorMessage");
-  errorMessageSpan!.innerHTML = errorMessage || "An unknown error has occurred";
+  if (errorMessageSpan) {
+    errorMessageSpan.textContent =
+      errorMessage || "An unknown error has occurred";
+  }
 
   setTimeout(() => {
     errorMessageSpan!.innerHTML = "";

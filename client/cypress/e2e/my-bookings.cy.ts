@@ -12,7 +12,7 @@ describe("My bookings", () => {
 
     cy.get("[data-cy=bookingsBadge]").contains(3);
 
-    cy.get("[data-cy=myBookingsBtn]").click();
+    cy.get("[data-cy=bookingsButton]").click();
   });
 
   it("check my bookings", () => {
@@ -20,7 +20,7 @@ describe("My bookings", () => {
   });
 
   it("remove booking", () => {
-    cy.get("[data-cy=deleteBooking]").first().click();
+    cy.get("[data-cy=deleteBookingBtn]").first().click();
     cy.get("[data-cy=confirmDeleteBtn]").click();
 
     cy.get("[data-cy=bookingsContainer]").children().should("have.length", 2);

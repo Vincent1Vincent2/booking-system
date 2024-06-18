@@ -1,4 +1,5 @@
 import { Booking } from "@prisma/client";
+import { removeButton } from "./removeButton";
 
 export function activeBookingsElement(booking: Booking) {
   const activeBooking = document.createElement("div");
@@ -17,6 +18,7 @@ export function activeBookingsElement(booking: Booking) {
 
   activeBooking.appendChild(room);
   activeBooking.appendChild(dateInput);
+  removeButton(booking.id, activeBooking);
 
   return activeBooking;
 }
