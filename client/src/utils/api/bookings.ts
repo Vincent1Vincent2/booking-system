@@ -55,10 +55,10 @@ export async function createBooking(roomId: number, date: string) {
   }
 }
 
-export async function removeBooking(id: number) {
+export async function removeBooking(bookingId: number) {
   try {
     const removedBooking = await axios.delete(
-      `${process.env.API_URL}/bookings/${id}`,
+      `${process.env.API_URL}/bookings/${bookingId}`,
       {
         withCredentials: true,
       }
@@ -75,7 +75,7 @@ export async function removeBooking(id: number) {
 }
 
 export async function editBooking(
-  bookingId: string,
+  bookingId: number,
   roomId: number,
   date: string
 ) {
