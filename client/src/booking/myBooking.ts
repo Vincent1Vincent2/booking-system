@@ -1,4 +1,5 @@
 import { Booking } from "@prisma/client";
+import { getRooms } from "../utils/api/room";
 const {
   archivedBookingsElement,
 } = require("../components/bookings/archivedBookings.ts");
@@ -23,8 +24,20 @@ export async function setupMyBookings() {
   }
 
   try {
-    const bookings = await getMyBookings();
-    const archivedBookings = await getMyArchivedBookings();
+    const [bookings, archivedBookings, rooms] = await Promise.all([
+      getMyBookings(),
+      getMyArchivedBookings(),
+      getRooms(),
+    ]);
+
+    if (rooms.error) {
+      throw new Error("Failed to fetch rooms.");
+    }
+
+    const roomMap = new Map<number, string>();
+    rooms.forEach((room: { id: number; name: string }) => {
+      roomMap.set(room.id, room.name);
+    });
 
     if (myBookings) {
       myBookings.remove();
@@ -32,7 +45,6 @@ export async function setupMyBookings() {
     if (currentContainer) {
       currentContainer.remove();
     }
-
     if (archivedContainer) {
       archivedContainer.remove();
     }
@@ -49,7 +61,8 @@ export async function setupMyBookings() {
 
     if (!bookings.error) {
       bookings.forEach((booking: Booking) => {
-        const activeBooking = activeBookingsElement(booking);
+        const roomName = roomMap.get(booking.roomId) || "Unknown Room";
+        const activeBooking = activeBookingsElement(booking, roomName);
         myBookings!.appendChild(activeBooking);
       });
     } else {
@@ -58,7 +71,8 @@ export async function setupMyBookings() {
 
     if (!archivedBookings.error) {
       archivedBookings.forEach((booking: Booking) => {
-        const archivedBooking = archivedBookingsElement(booking);
+        const roomName = roomMap.get(booking.roomId) || "Unknown Room";
+        const archivedBooking = archivedBookingsElement(booking, roomName);
         myBookings!.appendChild(archivedBooking);
       });
     } else {
