@@ -70,12 +70,14 @@ export async function setupBookingForm() {
 
       if (!booking.error) {
         await updateBookingBadge();
-        const successMessage = document.createElement("p");
-        successMessage.innerText = "Booking successful";
-        document.getElementById("app")?.appendChild(successMessage);
-        setTimeout(() => {
-          successMessage.remove();
-        }, 2000);
+        const successMessage = document.getElementById("successMessage");
+        if (successMessage) {
+          successMessage.innerText = "Booking successful";
+          document.getElementById("app")?.appendChild(successMessage);
+          setTimeout(() => {
+            successMessage.remove();
+          }, 2000);
+        }
       } else {
         createBookingError(booking.error);
         localStorage.setItem("redirectAfterLogin", window.location.pathname);

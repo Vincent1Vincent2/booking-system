@@ -49,15 +49,23 @@ export async function setupMyBookings() {
       archivedContainer.remove();
     }
 
-    myBookings = document.createElement("main");
+    myBookings = document.createElement("div");
     myBookings.setAttribute("data-cy", "bookingsContainer");
     myBookings.id = "bookingsContainer";
+
+    const h1 = document.createElement("h1");
+    h1.textContent = "Active Bookings";
+    myBookings.appendChild(h1);
 
     currentContainer = document.createElement("div");
     currentContainer.id = "currentBookings";
 
     archivedContainer = document.createElement("div");
     archivedContainer.id = "archivedBookings";
+
+    const h2 = document.createElement("h2");
+    h2.textContent = "Archived Bookings";
+    archivedContainer.appendChild(h2);
 
     if (!bookings.error) {
       bookings.forEach((booking: Booking) => {

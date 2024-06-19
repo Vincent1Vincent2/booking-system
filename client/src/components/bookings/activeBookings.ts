@@ -6,13 +6,16 @@ export function activeBookingsElement(booking: Booking, roomName: string) {
   const activeBooking = document.createElement("div");
   activeBooking.id = booking.id.toString();
   activeBooking.setAttribute("data-cy", "booking");
+  activeBooking.className = "activeBooking";
 
   const room = document.createElement("p");
   room.textContent = roomName;
   room.setAttribute("data-cy", "room");
+  room.className = "room";
 
   const dateInput = document.createElement("input");
   dateInput.id = `dateInput-${booking.roomId}`;
+  dateInput.className = "dateInput";
   dateInput.type = "date";
   dateInput.disabled = true;
   dateInput.value = booking.date.toString().substring(0, 10);
