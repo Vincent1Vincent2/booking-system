@@ -14,14 +14,17 @@ export function setupRegisterForm() {
   const recaptchaSiteKey = process.env.RECAPTCHA_SITE_KEY;
 
   registerForm = document.createElement("form");
+  registerForm.id = "registerForm";
 
   const emailInput = document.createElement("input");
+  emailInput.id = "emailInput";
   emailInput.type = "email";
   emailInput.placeholder = "Email";
   emailInput.name = "email";
   emailInput.setAttribute("data-cy", "emailInput");
 
   const passwordInput = document.createElement("input");
+  passwordInput.id = "passwordInput";
   passwordInput.type = "password";
   passwordInput.placeholder = "Password";
   passwordInput.name = "password";
@@ -33,6 +36,7 @@ export function setupRegisterForm() {
   recaptchaDiv.setAttribute("id", "recaptcha");
 
   const submitButton = document.createElement("button");
+  submitButton.id = "submitButton";
   submitButton.type = "submit";
   submitButton.innerText = "Register";
   submitButton.setAttribute("data-cy", "registerBtn");

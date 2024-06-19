@@ -31,6 +31,7 @@ export async function setupBookingForm() {
     bookingForm.id = "bookingForm";
 
     const roomSelector = document.createElement("select");
+    roomSelector.id = "roomSelector";
     for (let room of rooms) {
       const roomOption = document.createElement("option");
       roomOption.id = `room-${room.id}`;
@@ -41,12 +42,14 @@ export async function setupBookingForm() {
     roomSelector.setAttribute("data-cy", "roomSelector");
 
     const dateInput = document.createElement("input");
+    dateInput.id = "dateInput";
     dateInput.type = "date";
     dateInput.placeholder = new Date().toISOString();
     dateInput.name = "date";
     dateInput.setAttribute("data-cy", "dateSelector");
 
     const submitButton = document.createElement("button");
+    submitButton.id = "submitButton";
     submitButton.type = "submit";
     submitButton.innerText = "Book Room";
     submitButton.setAttribute("data-cy", "bookBtn");
