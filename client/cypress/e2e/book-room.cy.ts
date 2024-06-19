@@ -55,7 +55,10 @@ describe("Book room", () => {
         }
       });
 
-      cy.get("body").should("contain", "Booking successful");
+      cy.get("[data-cy=successMessage]").should(
+        "contain",
+        "Booking successful"
+      );
     });
   });
 });

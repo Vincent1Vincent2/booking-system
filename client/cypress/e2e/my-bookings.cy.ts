@@ -16,14 +16,14 @@ describe("My bookings", () => {
   });
 
   it("check my bookings", () => {
-    cy.get("[data-cy=bookingsContainer]").children().should("have.length", 3);
+    cy.get("[data-cy=bookingsContainer]").children().should("have.length", 4);
   });
 
   it("remove booking", () => {
     cy.get("[data-cy=deleteBookingBtn]").first().click();
     cy.get("[data-cy=confirmDeleteBtn]").click();
 
-    cy.get("[data-cy=bookingsContainer]").children().should("have.length", 2);
+    cy.get("[data-cy=bookingsContainer]").children().should("have.length", 3);
     cy.get("[data-cy=bookingsBadge]").contains(2);
   });
 

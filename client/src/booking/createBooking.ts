@@ -70,12 +70,16 @@ export async function setupBookingForm() {
 
       if (!booking.error) {
         await updateBookingBadge();
-        const successMessage = document.getElementById("successMessage");
+        const successMessage = document.createElement("span");
+        successMessage.setAttribute("data-cy", "successMessage");
+        successMessage.id = "successMessage";
+        successMessage.className = "successMessage";
+        document.getElementById("app")?.appendChild(successMessage);
         if (successMessage) {
           successMessage.innerText = "Booking successful";
           document.getElementById("app")?.appendChild(successMessage);
           setTimeout(() => {
-            successMessage.remove();
+            successMessage.innerText = "";
           }, 2000);
         }
       } else {
