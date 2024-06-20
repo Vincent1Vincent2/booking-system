@@ -1,5 +1,6 @@
 # Booking System
-[Demo](https://booking-system-lovat.vercel.app/) 
+
+[Demo](https://booking-system-lovat.vercel.app/)
 
 ## Användarflöde för Bokningssystem
 
@@ -57,6 +58,25 @@ RECAPTCHA_SECRET_KEY=YOUR_RECAPTCHA_SECRET_KEY
 ```
 
 https://www.google.com/recaptcha/admin/create
+
+## Cypress Konfiguration
+
+I Cypress config-filen (cypress.config.js), ändra baseUrl till din frontend-URL, exempelvis localhost, och API_URL till din server-URL. Här är ett exempel på en konfigurationsfil:
+
+```javascript
+export default defineConfig({
+  e2e: {
+    baseUrl: "http://localhost:3000", // Ändra till din frontend-URL
+    setupNodeEvents(on, config) {
+      on("task", { clearBookings });
+    },
+    env: {
+      BASE_URL: "http://localhost:3000", // Ändra till din frontend-URL
+      API_URL: "http://localhost:4000/api", // Ändra till din server-URL
+    },
+  },
+});
+```
 
 ## Bygga, Köra och Testa Projektet
 
