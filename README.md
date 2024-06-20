@@ -39,6 +39,24 @@ Detta projekt är ett bokningssystem skapat främst för att öva på Cypress oc
 - **client**: Innehåller front-end-koden, skriven i vanilla TypeScript, samt alla Cypress-tester. -
 - **server**: Innehåller back-end-API för bokningssystemet, skrivet i ren JavaScript med Express.
 
+## Produktionsmiljö
+
+För produktion behöver du också lägga till reCAPTCHA v2 nycklar:
+
+Front-end .env fil
+
+```env
+RECAPTCHA_SITE_KEY=YOUR_RECAPTCHA_SITE_KEY
+```
+
+Back-end .env fil
+
+```env
+RECAPTCHA_SECRET_KEY=YOUR_RECAPTCHA_SECRET_KEY
+```
+
+https://www.google.com/recaptcha/admin/create
+
 ## Bygga, Köra och Testa Projektet
 
 ### Förkrav Innan du bygger och kör projektet, se till att du har följande verktyg installerade på din maskin:
@@ -129,3 +147,5 @@ npm run migrate
 ```bash
 npm run studio
 ```
+
+Genom att följa ovanstående steg kan du bygga, köra och testa bokningssystemet effektivt. Lycka till!
